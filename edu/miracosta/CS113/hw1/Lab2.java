@@ -62,14 +62,7 @@ public class Lab2 {
 		}
 		else
 		{
-			if (num == 2)
-			{
-				return num;
-			}
-			else
-			{
-				return num;
-			}
+			return num;
 		}
 		return num;
 	}
