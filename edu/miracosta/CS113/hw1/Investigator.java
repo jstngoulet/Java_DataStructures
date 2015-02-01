@@ -11,7 +11,7 @@ import edu.miracosta.cs113.theory.Theory;
  */
 public class Investigator {
 
-	public static int weapons = 6, murderers = 6, locations = 10;
+	public static int weapons = 6, murderers = 6, locations = 10, curWeapon, curMurderer, curLocation;
 	
 	/**
 	 * @param args
@@ -20,41 +20,32 @@ public class Investigator {
 	//			Theory 2 results: 1, 1 , 1
 	
 	//The correct order: murder, location, weapon
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int curLocation = 0, curMurderer = 0, curWeapon = 0;
-		do{
-		for(int i = 1; i <= murderers; i++)
+		int curLocation = 0, curMurderer = 0, curWeapon = 0, totalChecks = 0;
+		int response = Theory.theoryTest3(curMurderer, curLocation, curWeapon);
+		
+		while(response != 0)
 		{
-			int currentMurdererTheory = Theory.theoryTest3(i, 0, 0);
-			//System.out.println("Current murderer: " + currentMurdererTheory);
-			if(currentMurdererTheory != 1)
+			if(response == 3)
 			{
-				curMurderer = i;
-				//Now checking for the weapon (when the location is correct)
-				for(int a = 1; a <= locations; a++)
-				{
-					int currentLocationTheory = Theory.theoryTest3(curMurderer, a, 0);
-					if(currentLocationTheory != 2)
-					{
-						curLocation = a;
-						//Now checking for the murderer
-						for(int d = 1; d <= weapons; d++)
-						{
-							int currentWeaponTheory = Theory.theoryTest3(curMurderer, curLocation, d);
-							if(currentWeaponTheory != 3)
-							{
-								curWeapon = d;
-							}
-						}
-					}
-				}
+				curWeapon++;
 			}
+			else if(response == 2)
+			{
+				curLocation++;
+			}
+			else if(response == 1)
+			{
+				curMurderer++;
+			}
+			totalChecks++;
+			response = Theory.theoryTest3(curMurderer, curLocation, curWeapon);
 		}
-		}while(Theory.theoryTest3(curMurderer, curLocation, curWeapon) != 0);
 		
 		Theory.checkTheory();
-		System.out.println("\n\nLocation: " + curLocation + "\nMurderer: " + curMurderer + "\nWeapon: " + curWeapon);
+		System.out.println("\n\nLocation: " + curLocation + "\nMurderer: " + curMurderer + "\nWeapon: " + curWeapon + "\n\nTotal Checks: " + totalChecks);
 		System.exit(0);
 	}
 }
