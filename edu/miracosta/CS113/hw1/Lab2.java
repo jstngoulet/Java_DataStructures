@@ -29,7 +29,14 @@ public class Lab2 {
 			try {
 				responseInt = Integer.parseInt(response);
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(new JFrame(), "Please input a valid number!");
+				if(response == null)
+				{
+					System.exit(0);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(new JFrame(), "Please input a valid number!");
+				}
 			}
 		}
 
