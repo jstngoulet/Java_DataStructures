@@ -17,7 +17,7 @@ public class Investigator {
 	 * @param args
 	 */
 	//Notes: 	Theory 1 results: 6, 10, 6
-	//			Theory 2 results: 1, 1 , 1
+	//		Theory 2 results: 1, 1 , 1
 	
 	//The correct order: murder, location, weapon
 	
