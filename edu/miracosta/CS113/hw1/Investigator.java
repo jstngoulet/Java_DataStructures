@@ -11,7 +11,7 @@ import edu.miracosta.cs113.theory.Theory;
  */
 public class Investigator {
 
-	public static int weapons = 6, murderers = 6, locations = 10, curWeapon, curMurderer, curLocation;
+	public static int weapons = 6, murderers = 6, locations = 10;
 	
 	/**
 	 * @param args
