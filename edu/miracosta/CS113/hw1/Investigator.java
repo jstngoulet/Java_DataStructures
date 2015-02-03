@@ -23,7 +23,7 @@ public class Investigator {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int curLocation = 0, curMurderer = 0, curWeapon = 0, totalChecks = 0;
+		int curLocation = 1, curMurderer = 1, curWeapon = 1, totalChecks = 0;
 		int response = Theory.theoryTest3(curMurderer, curLocation, curWeapon);
 		
 		while(response != 0)
