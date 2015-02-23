@@ -12,7 +12,7 @@ public class IndexKW {
 	public static int indexOf(E target)
 	{
 		int index = -1;
-		for(int i = 0; i < size(); i++)
+		for(int i = 0; i < theData.length; i++)
 		{
 			if(theData[i].equals(target))
 			{
