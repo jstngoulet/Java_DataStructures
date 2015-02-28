@@ -2,6 +2,7 @@
 package HW4;
 
 import java.util.AbstractSequentialList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -32,7 +33,7 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     
     public void addLast(E item)
     {
-    	add(size, item);
+    	add(getSize(), item);
     }
     
     public E getFirst()
@@ -42,12 +43,12 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     
     public E getLast()
     {
-    	return get(size);
+    	return get(getSize());
     }
 
 // Insert solution to programming exercise 3, section 8, chapter 2 here
     //3
-    private KWLinkedList(Node<E> head, Node<E> tail, int size)
+    KWLinkedList(Node<E> head, Node<E> tail, int size)
     {
       this.head = head;
       this.tail = tail;
@@ -59,6 +60,11 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
       }
     }
     
+    public int getSize()
+    {
+    	return this.size;
+    }
+    
     public ListIterator<E> listIterator()
     {
     	return  new KWListIter(0);
@@ -67,57 +73,6 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     public Iterator <E> iterator(int index)
     {
     	return new KWListIter(index);
-    }
-    
-    
-    
-    
-    //Main method
-    public static void main(String args[])
-    {
-    	
-    	//This is from pg 104 Numbering 1
-    	Node <String> tom = new Node <String>("Tom");
-    	Node <String> dick = new Node <String>("Dick");
-    	Node <String> harry = new Node <String>("Harry");
-    	Node <String> sam = new Node <String>("Sam");
-    	
-    	//Head
-    	tom.next = dick;
-    	tom.prev = null;
-    	
-    	//1
-    	dick.next = harry;
-    	dick.prev = tom;
-    	
-    	//2
-    	harry.next = sam;
-    	harry.prev = dick;
-    	
-    	//3
-    	sam.next = null;
-    	sam.prev = harry;
-    	
-    	printList(tom);
-    	Node<String> bill = new Node <String>("Bill");
-    	//Before tom
-    	bill.next = tom;
-    	bill.prev = null;
-
-    	System.out.println("\n\nNew List: ");
-    	printList(bill);
-    	
-    	//Insert Sue Before Sam
-    	Node <String> sue = new Node<String>("Sue");
-    	sue.prev = sam.prev;
-    	sam.prev.next = sue;
-    	sue.next = sam;
-    	sam.prev = sue;
-    	
-    	
-    	System.out.println("\n\nNew List: ");
-    	printList(bill);
-    	
     }
     
     public static void printList(Node<String> h) {
@@ -137,6 +92,7 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
      */
     @Override
     public void add(int index, E obj) {
+    	System.out.println("Add " + obj.toString() + " at: " + index);
         listIterator(index).add(obj);
     }
 
@@ -196,7 +152,8 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
          * Construct a KWListIter that will reference the ith item.
          * @param i The index of the item to be referenced
          */
-        public KWListIter(int i) {
+        public KWListIter(int i) 
+        {
             // Validate i parameter.
             if (i < 0 || i > size) {
                 throw new IndexOutOfBoundsException(
@@ -344,35 +301,206 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
             lastItemReturned = null;
         } // End of method add.
 
+        //Insert solution to programming exercise 2, section 8, chapter 2 here
+		@Override
+		public void set(E item) {
+		      if (lastItemReturned == null) {
+		        throw new IllegalStateException();
+		      }
+		      lastItemReturned.data = item;
+		    }
+		
+		// Insert solution to programming exercise 1, section 8, chapter 2 here
 		@Override
 		public void remove() {
-			// TODO Auto-generated method stub
-			
-		}
+		      if (lastItemReturned == null) {
+		        throw new IllegalStateException();
+		      }
+		      // Unlink this item from its next neighbor
+		      if (lastItemReturned.next != null) {
+		        lastItemReturned.next.prev = lastItemReturned.prev;
+		      }
+		      else { // Item is the tail
+		        tail = lastItemReturned.prev;
+		        if (tail != null) {
+		          tail.next = null;
+		        }
+		        else { // list is now empty
+		          head = null;
+		        }
+		      }
+		      // Unlink this item from its prev neighbor
+		      if (lastItemReturned.prev != null) {
+		        lastItemReturned.prev.next = lastItemReturned.next;
+		      }
+		      else { // Item is the head
+		        head = lastItemReturned.next;
+		        if (head != null) {
+		          head.prev = null;
+		        }
+		        else {
+		          tail = null;
+		        }
+		      }
+		      // make lastItemReturned null
+		      lastItemReturned = null;
+		      // decrement both size and index
+		      size--;
+		      index--;
+		    }
 
-		@Override
-		public void set(E e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-// Insert solution to programming exercise 1, section 8, chapter 2 here
-
-// Insert solution to programming exercise 2, section 8, chapter 2 here
     } //end class KWListIter
 
 	@Override
 	public ListIterator<E> listIterator(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		return new KWListIter(index);
 	}
 
 // Insert solution to programming exercise 1, section 7, chapter 2 here
+	public static int indexOf(KWLinkedList<String> myList, Node<String> target)
+	{
+		//System.out.println("Target to find: " + target.data);
+		int index = 0;
+		ListIterator <String> myIter = myList.listIterator();
+		while(myIter.hasNext())
+		{
+			//System.out.println("Iter to find: " + myIter.next());
+			if(target.data.equalsIgnoreCase(myIter.next()))
+			{
+				//System.out.println("Item: " + myIter.next() + " found!\nIndex: " + index);
+				break;
+			}
+			else
+			{
+				index++;
+			}
+		}
+		if (index > myList.size - 1)
+		{
+			System.out.print(target.data + " is not in list");
+			return -1;
+		}
+		else
+		{
+			System.out.print(target.data + " is at index: ");
+			return index;
+		}
+	}
 
 // Insert solution to programming exercise 2, section 7, chapter 2 here
+	public static int lastIndexOf(KWLinkedList<String> myList, Node<String> target)
 
-// Insert solution to programming exercise 3, section 7, chapter 2 here
+	// Insert solution to programming exercise 2, section 7, chapter 2 here
+	{
+		int index = 0, foundIndex = -1;
+		ListIterator <String> myIter = myList.listIterator();
+		while(myIter.hasNext())
+		{
+			if(target.data.equals(myIter.next()))
+			{
+				foundIndex = index;
+			}
+			index++;
+		}
+		if(foundIndex == -1)
+		{
+			System.out.print(target.data + " not found!");
+			return -1;
+		}
+		else
+		{
+			System.out.print(target.data + "'s last position is: ");
+			return foundIndex;
+		}
+	}
 
-// Insert solution to programming exercise 1, section 6, chapter 2 here
+	// Insert solution to programming exercise 2, section 7, chapter 2 here
+	public static <T extends Comparable<T>> int minIndex (KWLinkedList<T> myList) 
+	{
+		  return myList.indexOf (Collections.min(myList)); 
+	}
+	
+	
+	//Main method
+    public static void main(String args[])
+    {
+    	//Insert solution to programming exercise 1, section 6, chapter 2 here
+    	Node <String> tom = new Node <String>("Tom");
+    	Node <String> dick = new Node <String>("Dick");
+    	Node <String> harry = new Node <String>("Harry");
+    	Node <String> sam = new Node <String>("Sam");
+    	KWLinkedList<String> aList = new KWLinkedList<String>(tom, sam, 4);
+    	
+    	//Head
+    	tom.next = dick;
+    	tom.prev = null;
+    	
+    	//1
+    	dick.next = harry;
+    	dick.prev = tom;
+    	
+    	//2
+    	harry.next = sam;
+    	harry.prev = dick;
+    	
+    	//3
+    	sam.next = null;
+    	sam.prev = harry;
+    	
+    	printList(aList.head);
+    	Node<String> bill = new Node <String>("Bill");
+    	//Before tom
+    	bill.next = tom;
+    	aList.head = bill;
+    	bill.prev = null;
+
+    	System.out.println("\n\nAdded Bill: ");
+    	printList(aList.head);
+    	
+    	//Insert Sue Before Sam
+    	Node <String> sue = new Node<String>("Sue");
+    	sue.prev = sam.prev;
+    	sam.prev.next = sue;
+    	sue.next = sam;
+    	sam.prev = sue;
+    	
+    	
+    	System.out.println("\n\nAdded Sue: ");
+    	printList(aList.head);
+    	
+    	//Remove bill
+    	aList.head = bill.next;
+    	tom.prev = null;
+    	bill.next = null;
+    	
+    	
+    	System.out.println("\n\nRemove Bill: ");
+    	printList(aList.head);
+    	
+    	//Remove Sam
+    	sue.next = null;
+    	sam.next = null;
+    	
+    	System.out.println("\n\nRemove Sam: ");
+    	printList(aList.head);
+    	
+    	System.out.println("\n\nAdd Tom again: ");
+    	Node<String> tom2 = new Node<String>("Tom");
+    	tom2.prev = harry.prev;
+    	harry.prev.next = tom2;
+    	tom2.next = harry;
+    	harry.prev = tom2;
+    	printList(aList.head);
+    	
+    	System.out.println("\n\nDone\n");
+    	
+    	System.out.println(indexOf(aList, tom));
+    	System.out.println(lastIndexOf(aList, tom));
+    	
+    	aList.add("LALA");
+    	printList(aList.head);
+    	
+    }
 }
 /*</listing>*/
