@@ -1,0 +1,8 @@
+Lab 2, writeup:
+	1) a. O(n^2);
+	    b.	O(n + 2) = O(n)
+	    c. O(n^2)
+	    d. O(n)
+	3) See attached image
+	4) for 20, each is around 1000 except for quadratic and exponential. Quadratic is around 5,000 wherereas exponential is around 10,000
+	    for 40, They become more scattered and th Stay below 5,000 except for Log linear, quadratic and cubic and exponential. See attached image for table
