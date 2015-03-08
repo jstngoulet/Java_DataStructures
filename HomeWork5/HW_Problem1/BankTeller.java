@@ -17,6 +17,7 @@ package HW_Problem1;
  * 	5) View last transaction - Also in a stack, the user can see what their last transaction was. This include type and amount
  * 	6) The user can close the bank and skip everyone in front of the line. This would hopefully only happen if the bank runs 
  * out of money. You never know!
+ *  
  */
 import java.util.Scanner;
 
