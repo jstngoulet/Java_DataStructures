@@ -1,0 +1,174 @@
+/**
+ * This class allows the user to input a double and tells the user all of the possible ways to make change
+ */
+package Homework_1;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import javax.swing.*;
+import javax.swing.JOptionPane;
+
+
+
+public class ChangeMaker {
+
+	public static final int coinAmounts[] = {1, 5, 10, 25,100};
+
+	/**
+	 * Default constructor
+	 * 
+	 */
+	public ChangeMaker()
+	{
+		new ChangeMaker();
+	}
+
+	/**
+	 * Create a main method to test the class
+	 */
+	public static void main(String [] args)
+	{
+		/**
+		 * Make a default
+		 */
+		//makeChange(1.25); //This can be uncommented
+
+		/**
+		 * Make an option where the user can select the amount
+		 */
+		double value = 0;
+		while (value == 0)
+		{
+			try
+			{
+				String input = JOptionPane.showInputDialog(
+						new JFrame(), "Please select an amount in which you wish to make change for: ");
+				
+				if (input == null)
+				{
+					throw new NullException();
+				}
+				else
+					value = Double.parseDouble(input);
+				
+				//Now check to see if too large
+				if(value > 2.50)
+				{
+					System.out.println("Value too large! Please try again!");
+					value = 0;
+				}
+				
+			}
+			catch(NullException e)
+			{
+				//Throws a custom exception
+			}
+			catch(Exception e)
+			{
+				value = 0;
+			}
+		}
+
+		makeChange(value);
+		System.exit(0);
+	}
+
+	/**
+	 * Use an abstract method that will use the possible combinations to get the possibillites for change
+	 * 
+	 * @param number
+	 */
+	public static void makeChange(double number)
+	{
+		List<Integer> results = new LinkedList<Integer>();
+		number*= 100;
+		System.out.println("\nTotal Combinations: " + possibleCombinations(results, 0, 0, (int)number));
+	}
+
+	public static int  possibleCombinations(List<Integer> coinsUsed, int currentCoin, int amountSoFar, int amountToChange)
+	{
+		int possibilities = 0;
+
+		//if last added coin took us to the correct sum, we have a winner!
+		if (amountSoFar == amountToChange)
+		{
+			//output 
+			System.out.print("\nChange for $"+(double)amountToChange/100+" = ");
+
+			//run through the list of coins that we have and display each.
+			//Create coins
+			int penny = 0, nickel = 0, dime = 0, quarter = 0, dollar = 0;
+			for(Integer count: coinsUsed){
+				/**
+				 * Because we only want to display a table, we must count each one.
+				 */
+				switch(count)
+				{
+				case 1:
+					penny++;
+					break;
+
+				case 5:
+					nickel++;
+					break;
+
+				case 10:
+					dime++;
+					break;
+
+				case 25:
+					quarter++;
+					break;
+
+				case 100:
+					dollar++;
+					break;
+				}
+
+				//System.out.print("." +count + " ");
+			}
+			/**
+			 * Print totals for each combination
+			 */
+
+			System.out.println("\nPennies:\t" + penny + 
+					"\nNickels:\t" + nickel + 
+					"\nDimes:\t\t" + dime + 
+					"\nQuarters:\t" + quarter + 
+					"\nDollars:\t" + dollar);       
+
+			//pass this back to be tallied
+			return 1;
+		}
+
+		/*
+		 * Check to see if we overshot the amountToBeChanged
+		 */
+		if (amountSoFar > amountToChange)
+		{
+			//this branch was unsuccessful
+			return  0;
+		}
+
+		// Pass through each coin to be used
+		for (Integer coin : coinAmounts)
+		{
+			//we only want to work on currentCoin and the coins after it
+			if (coin >= currentCoin)
+			{
+				//copy the list so we can branch from it
+				List<Integer> copyOfCoinsUsed = new ArrayList<Integer>(coinsUsed);
+
+				//add on one of our current coins
+				copyOfCoinsUsed.add(coin);
+
+				//branch and then collect successful attempts
+				possibilities += possibleCombinations(copyOfCoinsUsed, coin, amountSoFar + coin, amountToChange);
+			}
+		}
+
+
+		return possibilities;
+	}
+
+}
