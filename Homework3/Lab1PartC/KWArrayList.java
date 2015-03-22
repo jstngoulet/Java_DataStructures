@@ -13,7 +13,7 @@ public class KWArrayList<E> {
 	
 	public KWArrayList(int capacity) {
 		// TODO Auto-generated constructor stub
-		capacity = capacity;
+		this.capacity = capacity;
 		theData = (E[]) new Object[capacity];
 	}
 	
