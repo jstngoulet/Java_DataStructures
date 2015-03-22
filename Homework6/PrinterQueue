@@ -1,0 +1,193 @@
+package Homework_2;
+
+import java.util.Date;
+import java.util.Random;
+
+
+public class SimulatePrinterQueue 
+{
+	/**
+	 * Create a simulation of a printer Queue. This class will create a printJob 100 times with random assignments
+	 * 
+	 * The key to this program is that the length of the job (page count) determines when the document will be printed.
+	 * If the document has the same priority as another document, they are printed in the order in which it was recieved.
+	 * 
+	 * The sorting works in which the jobs are sorted by priority first, then pageLength. This sorting will all be done in the 
+	 * PrinterQueue class, which manages the queue. This program is the driver, which solely does the simulation of printing
+	 * 
+	 * Let's get started!
+	 */
+	
+	/**
+	 * Create main method
+	 *      Main method creates the loop in which the documents are processed. 
+	 *      We will do this in recuriosn becuase that is what we are learngin
+	 */
+	public static PrinterQueue qu;
+	
+	public static void main(String [] args)
+	{
+		//Create queue
+		qu = new PrinterQueue();
+		
+		//Create 100 jobs
+		createJob(100);
+
+		qu.showPrintQueue();
+
+		//Display Stats, as required
+		/**
+		 * WE have to note that the printer can print 10 pages a minute. How long does it take to Complete all jobs?
+		 * 
+		 */
+		showStats();
+	}
+	
+	public static int createJob(int jobNum)
+	{
+		if(jobNum == 0)
+			return 0;
+		else
+		{
+			//This is where we will create the job and add it to the Queue
+			//Create a random number of pages
+			Random randPages = new Random();
+			int pages = randPages.nextInt(50) + 1;
+			
+			Date created = new Date();
+			String dateRecieved = created.toString();
+			
+			//Create a random Job Type
+			Random jobType = new Random();
+			int jType = jobType.nextInt(3);
+			
+			//Init a new PrintJob
+			PrintJob job;
+			
+			switch(jType)
+			{
+			case 0:
+				job = new PrintJob(jobNum, "Job_" + jobNum + "", pages, dateRecieved);
+				break;
+				
+			case 1:
+				//This is going to have different printer names
+				job = new PrintJob(jobNum, "Job_" + jobNum + "", pages, dateRecieved, getPrinterName());
+				break;
+				
+			case 2:
+				//This is going to have different priorities and different printers
+				job = new PrintJob(jobNum, "Job_" + jobNum + "", pages, dateRecieved, getPrinterName(), getPriority());
+				break;
+				
+			default:
+				job = new PrintJob(jobNum, "Job_" + jobNum + "", pages, dateRecieved);
+				break;
+			}
+			
+			//After the job is created, add it to the queue. The Printer queue class should automatically sort the 
+			//jobs once an item is added;
+			qu.addJob(job);
+			
+			//Because we are simulating, we have to sleep to simulate the printer recieving the tasks,
+			try {
+				System.out.println("Added: " + job.toString());
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//Return the current job num (remember, this is going to go down as we finish
+			return createJob(jobNum-1);
+		}
+	}
+	
+	public static String getPrinterName()
+	{
+		Random randPrinter = new Random();
+		int printerInt = randPrinter.nextInt(3) + 1;
+		
+		String printerName = "CS_113_Printer_Class_" + printerInt;
+		return printerName;
+	}
+	
+	public static String getPriority()
+	{
+		Random randPriority = new Random();
+		int prInt = randPriority.nextInt(3);
+		switch(prInt)
+		{
+		case 0:
+			return "Low";
+		case 1:
+			return "Normal";
+		case 2:
+			return "High";
+		default:
+			return "Low";
+		}
+	}
+	
+	public static void showStats()
+	{
+		//Calculate the estimate time (hrs, min, sec) in which the job wil take to complete
+		System.out.println("\nTime to Print: " + timeToPrint() + " if from one printer\n");
+		System.out.println(timeToPrintSep());
+	}
+	
+	public static String timeToPrint()
+	{
+		int totalPages = 0;
+		for(PrintJob a : qu.getQ())
+		{
+			//Get total pages
+			totalPages += a.getPages();
+		}
+		
+		//Calucate time
+		return calcTime(totalPages);
+	}
+	
+	public static String calcTime(int pages)
+	{
+		int timeToPrintSecs = pages * 6; //10 pages a minute
+		System.out.println("Total Seconds: " + timeToPrintSecs);
+		System.out.print("\t for " + pages + " pages. (Pages * 1 page for every 6 sseconds)\n");
+		//Caluate hrs, mins, secs
+		
+	    int hours = (int) timeToPrintSecs / 3600;
+	    int remainder = (int) timeToPrintSecs - hours * 3600;
+	    int mins = remainder / 60;
+	    remainder = remainder - mins * 60;
+	    int secs = remainder;
+		
+		return hours + ":" + mins + ":" + secs;
+	}
+	
+	public static String timeToPrintSep()
+	{
+		int pageCount[] = new int[3];
+		//Get pages in printer 1
+		for(PrintJob a : qu.getQ())
+		{
+			if(a.getPrinterName().equals("CS_113_Printer_Class_1"))
+			{
+				pageCount[0] += a.getPages();
+			}
+			else if(a.getPrinterName().equals("CS_113_Printer_Class_2"))
+			{
+				pageCount[1] += a.getPages();
+			}
+			else if(a.getPrinterName().equals("CS_113_Printer_Class_3"))
+			{
+				pageCount[2] += a.getPages();
+			}
+		}
+		
+		
+		return "\nPrinter 1 Estimated time to Complete: "+ calcTime(pageCount[0]) + 
+				"\nPrinter 2 Estimated time to Complete: " + calcTime(pageCount[1]) + 
+				"\nPrinter 3 Estimated time to Complete: " + calcTime(pageCount[2]);
+	}
+}
