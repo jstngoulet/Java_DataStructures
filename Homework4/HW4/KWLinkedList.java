@@ -4,7 +4,6 @@ package HW4;
 import java.util.AbstractSequentialList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -65,7 +64,8 @@ public class KWLinkedList<E> extends AbstractSequentialList<E> {
     	return this.size;
     }
     
-    public ListIterator<E> listIterator()
+    @Override
+	public ListIterator<E> listIterator()
     {
     	return  new KWListIter(0);
     }

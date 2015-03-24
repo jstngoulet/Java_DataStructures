@@ -30,6 +30,7 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return this.type + "   \tAmount: $" + this.amount;

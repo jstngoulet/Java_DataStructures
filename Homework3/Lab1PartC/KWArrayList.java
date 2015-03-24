@@ -1,5 +1,4 @@
 package Lab1PartC;
-import java.util.*;
 
 public class KWArrayList<E> {
 
@@ -13,7 +12,7 @@ public class KWArrayList<E> {
 	
 	public KWArrayList(int capacity) {
 		// TODO Auto-generated constructor stub
-		capacity = capacity;
+		this.capacity = capacity;
 		theData = (E[]) new Object[capacity];
 	}
 	
