@@ -1,5 +1,4 @@
 package Lab1PartC;
-import java.util.*;
 
 public class KWArrayList<E> {
 

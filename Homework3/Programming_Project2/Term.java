@@ -47,6 +47,7 @@ public class Term<T> implements Comparable<T> {
 		return 0;
 	}
 	
+	@Override
 	public String toString()
 	{
 		return coefficient + "x^" + exponent + " ";
