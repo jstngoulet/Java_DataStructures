@@ -161,6 +161,7 @@ public class DoubleStack<E> extends ArrayList<E>{
 		}
 	}
 
+	@Override
 	public boolean isEmpty()
 	{
 		if(list1.size() + list.size() == 0)
@@ -171,6 +172,7 @@ public class DoubleStack<E> extends ArrayList<E>{
 			return false;
 	}
 	
+	@Override
 	public int size()
 	{
 		return list1.size() + list.size();

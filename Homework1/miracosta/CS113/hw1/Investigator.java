@@ -3,8 +3,6 @@
  */
 package miracosta.CS113.hw1;
 
-import edu.miracosta.cs113.theory.Theory;
-
 /**
  * @author Justin Goulet
  *
