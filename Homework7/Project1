@@ -1,0 +1,92 @@
+//Java Does not like me.. Errors with everything this week :( Never got eclipse working again after its most recent error
+
+import java.lang.Math;
+
+
+public class RecursiveBinary {
+	
+	public static void main(String[] args) {
+		
+		int num = 13151231;
+		
+		System.out.println(num + " in binary is: " + convertDecimal(num));
+		System.out.println("Now back to Decimal: " + convertBinary(convertDecimal(num)));
+	}
+	
+	/**
+	*	Wrapper method for decimal2Binary
+	*/
+	public static String convertDecimal(int num)
+	{
+		return decimalToBinary(num, "");
+	}
+	
+	/**
+	*	This method is a recursive method that takes in a decimal number and returns a binary String
+	*
+	*
+	*/
+	public static String decimalToBinary(int curNum, String curBinary)
+	{
+		/*We are going to use a method called "dibble dabble" 
+		*	The way it works is simple. We are going to divide the curNum by 2 and return the remainder as a binary digit
+		*/
+		if (curNum > 0) {
+			int newNum = curNum/2;
+			int remainder = curNum % 2;
+			
+			//Add the remainder to the curBinary
+			curBinary += remainder + "";
+			return decimalToBinary(newNum, curBinary);
+		}
+		else {
+			//Now that we are complete, we are going to return the reverse of the string
+			return reverseString(curBinary);
+		}
+	}
+	
+	//Now, let's convert a binary number to a decimal
+	public static int convertBinary(String a)
+	{
+		//The method is passed in a binary String of numbers (a)
+		return binaryToDecimal(0, a);
+	}
+	
+	public static int binaryToDecimal(int curNum, String curBinary)
+	{
+		//We are going to do this very simply. Each 0 or 1 represents a function that needs to be expanded. we are going to 
+		//	Multiply each binary character by 2 raised to the power of (position -1). 
+		//	We are then going to have another variable to hold the current number achieved.
+		if (curBinary.length() == 0 || curBinary == null) {
+			return curNum;
+		}
+		else {
+			curNum += (Integer.parseInt(curBinary.substring(0, 1)) * (int)Math.pow(2, curBinary.length() - 1));
+			if (curBinary.length() > 2) {
+				return binaryToDecimal(curNum, curBinary.substring(1));
+			}
+			else {
+				//Determine if even or odd
+				if (curBinary.charAt(0) == '1') {
+					//Odd
+					return curNum += 1;
+				}
+				else {
+					//Even
+					return curNum;
+				}
+			}
+	}
+		
+	}
+	
+	
+	public static String reverseString(String a)
+	{
+		String newString = "";
+		for (int i = a.length()-1; i >= 0; i--) {
+			newString += a.charAt(i);
+		}
+		return newString;
+	}
+}
