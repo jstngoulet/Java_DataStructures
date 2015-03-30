@@ -1,0 +1,8 @@
+Just a note: 
+
+Been busy this week with several tests. Was not able to complete the Binary search trees on time(Part 2 of HW)
+
+Reasoning - 
+I was busy this week with other classes until today. When I started working on it this morning, my eclipse would keep giving the the stupide error: Could not find main
+
+After searching and troubleshooting, I finally got rid of that error and it was replaced with a different one. This would happen with all of my variables, but it came down to: (xxx could not be resoved to a type). This would occur with xxx being string, int, char, Scanner, Objects, etc.... I started using anoter IDE for that first project, but could not complete the second... That is why there is not a project head in the one turned in
