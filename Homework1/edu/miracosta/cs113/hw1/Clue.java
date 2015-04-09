@@ -3,6 +3,8 @@ package edu.miracosta.cs113.hw1;
 import java.util.Random;
 import java.util.Scanner;
 
+import edu.miracosta.cs113.theory.Theory;
+
 public class Clue {
 
     /**
