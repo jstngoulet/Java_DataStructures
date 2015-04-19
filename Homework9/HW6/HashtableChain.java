@@ -1,8 +1,8 @@
 package HW6;
 
-import java.awt.List;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
@@ -79,13 +79,21 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 		@Override
 		public String toString()
 		{
-			return key.toString() + " = " + value.toString();
+			String space = "                  ";
+			space = space.substring(key.toString().length());
+			
+			return this.key.toString() + " = " + space + this.value.toString();
 		}
 	}
 
 	// Constructor
 	public HashtableChain() {
 		table = new LinkedList[CAPACITY];
+	}
+	
+	public String getEntry()
+	{
+		return this.keySet().toString();
 	}
 
 	/*<listing chapter="7" number="9">*/
@@ -130,6 +138,7 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 	 */
 	@Override
 	public V put(K key, V value) {
+		System.out.println("Putting: " + key.toString());
 		int index = key.hashCode() % table.length;
 		if (index < 0) {
 			index += table.length;
@@ -164,7 +173,7 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 		//Increase the load capacity by x2, then rehash all table contents
 		LOAD_THRESHOLD *= 2;
 		
-		LinkedList[] temp = new LinkedList[CAPACITY * 2];
+		//LinkedList[] temp = new LinkedList[CAPACITY * 2];
 		for(int i = 0; i < table.length; i++)
 		{
 			//No Idea How to rehash my table[index]
@@ -177,17 +186,8 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 	@Override
 	public String toString()
 	{
-		String tableStr = "", entry = "";
-		//Loop through the entire table
-		for(LinkedList<Entry<K, V>> tempKey : table)
-		{
-			for(int i = 0; i < tempKey.size(); i++)
-			{
-				entry += tempKey.get(i).toString();
-			}
-			tableStr += entry + "\n";
-		}
-		return tableStr;
+		System.out.println("Testing");
+		return "Blach";
 	}
 
 	// Insert solution to programming exercise 5, section 4, chapter 7 here
@@ -206,13 +206,12 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 
 	@Override
 	public Set<java.util.Map.Entry<K, V>> entrySet() {
-		// TODO Auto-generated method stub
-		return null;
+		return new EntrySet();
 	}
 	
 	private class EntrySet extends AbstractSet<Map.Entry<K, V>>
 	{
-
+		
 		@Override
 		public Iterator<java.util.Map.Entry<K, V>> iterator() {
 			// TODO Auto-generated method stub
@@ -259,7 +258,7 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 		@Override
 		public java.util.Map.Entry<K, V> next() {
 			// TODO Auto-generated method stub
-			return null;
+			return localIterator.next();
 		}
 		
 	}
@@ -298,6 +297,4 @@ public class HashtableChain<K, V> extends AbstractMap<K, V> {
 		}
 	}
 
-
-	// Insert solution to programming project 7, chapter -1 here
 }
