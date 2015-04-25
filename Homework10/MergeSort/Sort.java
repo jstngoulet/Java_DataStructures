@@ -107,6 +107,8 @@ public class Sort { //Uses mergeSort to sort a file of Strings
 	{
 		if(anArray.length > 1)
 		{
+			//Update 
+			
 			int tempArraySize = anArray.length/2;	//Cuts array in half for future sorting
 			Integer[] leftArray = Arrays.copyOfRange(anArray, 0, tempArraySize);
 			Integer[] rightArray = Arrays.copyOfRange(anArray, tempArraySize, anArray.length);
