@@ -12,7 +12,7 @@ public class SkipListDriver {
 		// Test the Skip List functionality
 		SkipList<Integer> myList = new SkipList<Integer>();
 		
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < 1000; i++)
 		{
 			if(i % 3 == 0 && i % 5 ==0)
 			{
@@ -23,20 +23,19 @@ public class SkipListDriver {
 		System.out.println(myList);
 		
 		//Now that we have a list, let's check it for a value
-		if(myList.contains(15))
-		{
-			System.out.println("\n15 Found!");
-		}
+		System.out.println("\nList contains 150:   " + myList.contains(150));
 		
-		for(int i = 0; i < 100; i++)
+		for(int i = 0; i < 1000; i++)
 		{
-			if(i%10 ==0)
+			if(i % 10 == 0)
 			{
 				//Remove every other item
 				myList.remove(i);
 			}
 		}
 		System.out.println("\nRemoved Every other item: \n" + myList);
+
+		System.out.println("\nList contains 150:   " + myList.contains(150));
 	}
 	
 	public static void main(String[] args)
