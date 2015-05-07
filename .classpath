@@ -11,6 +11,7 @@
 	<classpathentry kind="src" path="Homework9"/>
 	<classpathentry kind="src" path="Homework10"/>
 	<classpathentry kind="src" path="Homework11"/>
+	<classpathentry kind="src" path="Final Project"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/Justin/Library/Mobile Documents/com~apple~CloudDocs/My Documents/MiraCosta Documents/CS 113/CS113_Justin_Goulet/TheoryRev2.jar"/>
 	<classpathentry kind="output" path="bin"/>
