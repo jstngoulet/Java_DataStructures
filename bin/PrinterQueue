@@ -1,0 +1,150 @@
+package Homework_2;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PrinterQueue
+{
+	List<PrintJob> qu;
+	//Create heiarchy of priorities
+	public enum Priorities{
+		High, Normal, Low
+	};
+	Priorities curP;
+	
+	public PrinterQueue()
+	{
+		qu = new ArrayList<PrintJob>();
+	}
+	
+	public void addJob(PrintJob a)
+	{
+		qu.add(a);
+	}
+	
+	public List<PrintJob> getQ()
+	{
+		return qu;
+	}
+	
+	public void sortQueue()
+	{
+		Collections.sort(qu);
+		
+		//Now that the collection is sorted by priority, we need to sort by pageCount
+		//Add each prioity job into their own list
+		List<PrintJob> hi = new ArrayList<PrintJob>();
+		List<PrintJob> norm = new ArrayList<PrintJob>();
+		List<PrintJob> lo = new ArrayList<PrintJob>();
+		for(PrintJob a : qu)
+		{
+			if(a.getPriority().equals("Low"))
+				lo.add(a);
+			else if (a.getPriority().equals("Normal"))
+				norm.add(a);
+			else if (a.getPriority().equals("High"))
+				hi.add(a);
+		}
+		
+		//Clear current
+		qu.clear();
+		
+		//Now that each are in their own list, we need to sort them and merge them back together
+		Collections.sort(lo, new Comparator<PrintJob>(){
+			public int compare(PrintJob a, PrintJob b)
+			{
+				Integer ai = new Integer(a.getPages());
+				Integer bi = new Integer(b.getPages());
+				
+				return ai.compareTo(bi);
+			}
+		});
+		Collections.sort(norm, new Comparator<PrintJob>(){
+			public int compare(PrintJob a, PrintJob b)
+			{
+				Integer ai = new Integer(a.getPages());
+				Integer bi = new Integer(b.getPages());
+				
+				return ai.compareTo(bi);
+			}
+		});
+		Collections.sort(hi, new Comparator<PrintJob>(){
+			public int compare(PrintJob a, PrintJob b)
+			{
+				Integer ai = new Integer(a.getPages());
+				Integer bi = new Integer(b.getPages());
+				
+				return ai.compareTo(bi);
+			}
+		});
+		
+		//Add them back in
+		for(PrintJob a : hi)
+			qu.add(a);
+		for(PrintJob a : norm)
+			qu.add(a);
+		for(PrintJob a : lo)
+			qu.add(a);
+		
+		try {
+			System.out.println("\n\nSorting Queue. . . ");
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void showPrintQueue()
+	{
+		sortQueue();
+		/**
+		 * Separate by printer
+		 */
+		System.out.println("\n\n\nPrinter_1:\n---------------------------------------------------------");
+		System.out.println("Task\t|\tFile: \t|\tPages:\t|\tPriority:\t|\tPrinter:\t|\t\tDate Recieved:\t\t|");
+		System.out.println("----\t\t-----\t\t------\t\t---------\t\t--------\t\t\t--------------");
+		
+		//Get length so we can put a line under it. Only want it once wo we can make things consistant
+		int length = 0;
+		
+		for(PrintJob job : qu)
+		{
+			if(job.getPrinterName().equalsIgnoreCase("CS_113_Printer_Class_1")){
+				System.out.println(job.toString());
+				length = job.toString().length() + 5;
+			}
+		}
+		addBorder(length);
+		
+		System.out.println("\n\nPrinter_2:\n---------------------------------------------------------");
+		System.out.println("Task\t|\tFile: \t|\tPages:\t|\tPriority:\t|\tPrinter:\t|\t\tDate Recieved:\t\t|");
+		System.out.println("----\t\t-----\t\t------\t\t---------\t\t--------\t\t\t--------------");
+		for(PrintJob job : qu)
+		{
+			if(job.getPrinterName().equalsIgnoreCase("CS_113_Printer_Class_2"))
+				System.out.println(job.toString());
+		}
+		addBorder(length);
+		
+		System.out.println("\n\nPrinter_3:\n---------------------------------------------------------");
+		System.out.println("Task\t|\tFile: \t|\tPages:\t|\tPriority:\t|\tPrinter:\t|\t\tDate Recieved:\t\t|");
+		System.out.println("----\t\t-----\t\t------\t\t---------\t\t--------\t\t\t--------------");
+		for(PrintJob job : qu)
+		{
+			if(job.getPrinterName().equalsIgnoreCase("CS_113_Printer_Class_3"))
+				System.out.println(job.toString());
+		}
+		addBorder(length);
+	}
+	
+	public static void addBorder(int l)
+	{
+		String temp = "";
+		for(int i = 0; i < l + 50; i++)
+			temp += "-";
+		System.out.println(temp);
+	}
+
+}
