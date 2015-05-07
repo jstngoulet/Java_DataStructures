@@ -1,142 +1,148 @@
 package KrashKourse;
 
-/* Final Project
-   File Name:          RaceGame.java
-   Programmer:         Justin Goulet
-   Date Last Modified: May. 7, 2015
-
-   Problem Statement: (what you want the code to do)
-   
-   Create a gam similar to the iOS game I put on the app store two weeks ago.
-   This game allows you to control a car on a road with oncoming traffic.
-   You keep going until you hit an oncoming car. As you play, the car moves 
-   faster and dodging cars gets harder
-    
-   Overall Plan (step-by-step, how you want the code to make it happen):
-	1. Create a PAnel for each of my menus
-      
-      1)There should be one for the menu, game, and the high scores menu
-      
-	2. Create another, smaller frame for the user to select a car
-	
-   3. Add items to the main menu
-	
-   4. Add a menu bar with proper action listeners. Each item should
-      do something. The menu option should take you to the main menu,
-      the scores should take you to the the scores menu, and the quit 
-      option should close the game
-   
-   5. After the menuBar is functional, setup the main menu. This is the 
-      screen that all players see, so it needs to look good. Add images, 
-      labels,  and buttons that allow the user to interact with the menu.
-         
-         1) the Play game btn should hide the main menu and build a road 
-         on the screen. After the road is built, the players car will be 
-         added and the oncoming trafic will be hidden from view
-         
-         2) the High Scores btn should take the user to the high scores
-         screen where they can view their top scores. This screen needs to
-         look good too because people are always checking their personal bests.
-         Make them want to play more!
-         
-         3) the select car btn brings up the frame to the user that allows them
-         to change their car. This car is then saved to a file and is brought
-         back up when the game loads.
-         
-   6. Now that the menu is functional, lets build the game
-         
-         1) Add an array of labels that each of an imageIcon of a roadPiece
-         This is so we can show the user a road that makes it look like the
-         car is moving on the road, not the other way around.
-         
-         2) using the game timer, adjust the Y value of each roadpiece to make it 
-         appear that the car is moving. To make this visually appealing and 
-         realisitc, we need to add a row or two that the user does not see to the 
-         bottom of the screen.
-         
-         3) As we adjust the road pieces based on the timer, we will notice that the 
-         road moves down, but deos not reset. This is why we made another row. Set in
-         the timer listener to check if the y value of the road piece is greater
-         than that of the height of the frame, reset t a negative Y value so the 
-         row appears above the top of the frame and rolls down the screen, like an
-         endless conveyor belt.
-         
-         4) We have a moving road. Now, lets add our car to it. Set the Y value to be
-         a constant so it deos not move up and down. We only want to move left and right
-         to avoid traffic. In the timer listener class, we want to check to see if the 
-         car is still in bounds. But wait, how do we make it move?
-         
-         5) add a mouse listener to check if the user clicks the frame. If the user 
-         clicks to the right of the car, move the car right. if the user clicks to 
-         the left. move it left. The timer listener will be checking to see if the 
-         car has left the screen or not. We want the car to not be able to cheat the 
-         game, so we set the X value to the greatest(or least) possible and change the 
-         variable to the carMovement so they car easily enter the other direection
-         again.
-         
-         6) Check to see if the user hits another car or not. This is also happening
-         in the timer listener because we want to check everytime the game moves.
-         As of right now, we cant see what the cars look like, so we need to add 
-         some images.
-         
-         7) create methods that will enable each of the three cars to choose a random
-         color. Them, after the car is selected, we want the car to be moved to a random
-         lane so the game is different every time the user plays. Call this method every 
-         time the oncoming car's Y vlaue is greater than the height of the frame.
-         
-         8) now that we can see the cars we hit, we need to show the user a gameOver screen 
-         as well as stop all actitivy that is going on in the game. we want to stop the timer
-         which stops all movement in the road, car, and oncoming traffic. Then, show the user
-         a game over screen that will allow them to see their scores of return to the main menu
-         
-         9) at this point, we need to save the score from the game. We will do this by 
-         calling a different class that allows us to save the player name and score to a file.
-         We will append this file so the user can save all scores earned while playing.
-         
-   7. Now that the game is functional, now for the high scores menu
-   
-         1)Add an image to the screen that tells the user that they are in teh 
-         High Scores Screen
-         
-         2) Add images for user appeal. This is the reason for the two cars on 
-         the left and right
-         
-         3) Add a JTextArea that is not editable, but will load in the scores read from
-         a file. This will be done using the readFileIntoArrayList class that will
-         first import the name and score of the very first game and add each item to 
-         an arraylist. This will keep going until all scores in the file are added.
-         
-         4) Now we need to sort the scores array. This is so we can get the scores
-         array from least to greatest. Why is this helpful? this helps us sort
-         the list from greatest to smallest using recursion in a later step.
-         This is so we can see the descending list of scores, becasue we really
-         only car about the top few.
-         
-         5) Now that the scores are sorted, we lost the corresponding name. To 
-         match the scores back up with the person that earned it, we need to 
-         create a search method that will search for the player name by the score
-         they recieved.
-         
-         6) after the scores are matched up with their players, we need to add the
-         information to a string that will be returned and sent to another class via
-         another method. We now have a foramtted String with the matched up user names
-         and scores.
-         
-         7) add the string to the text area.
-         
-         8) Change the font of the text area so the scores are easier to read
-         
-
-   etc.
-
-   Classes needed and Purpose (Input, Processing, Output)
-   main class - RaceGame.java
-   CarSelect.java
-   SaveScore.java
-   readFileIntoArrayList.java
-   MyGameScores.java
-   
-
+/** Final Project
+*   File Name:          RaceGame.java
+*   Programmer:         Justin Goulet
+*   Date Last Modified: May. 7, 2015
+*
+*   Problem Statement: (what you want the code to do)
+*   
+*   Create a game similar to the iOS game I put on the app store a few months ago.
+*   
+*   <Updated links>
+*   		<a href="https://itunes.apple.com/cn/app/krash-kourse/id870366244?l=en&mt=8">Krash Kourse</a>			//Original
+*   		<a href="https://itunes.apple.com/cn/app/krash-kourse-2/id968211755?l=en&mt=8">Krash Kourse 2</a>		//Second Version
+*   </Updated links>
+*   	
+*   This game allows you to control a car on a road with oncoming traffic.
+*   You keep going until you hit an oncoming car. As you play, the car moves 
+*   faster and dodging cars gets harder
+*    
+*   Overall Plan (step-by-step, how you want the code to make it happen):
+*	1. Create a PAnel for each of my menus
+*      
+*      1)There should be one for the menu, game, and the high scores menu
+*      
+*	2. Create another, smaller frame for the user to select a car
+*	
+*   3. Add items to the main menu
+*	
+*   4. Add a menu bar with proper action listeners. Each item should
+*      do something. The menu option should take you to the main menu,
+*      the scores should take you to the the scores menu, and the quit 
+*      option should close the game
+*   
+*   5. After the menuBar is functional, setup the main menu. This is the 
+*      screen that all players see, so it needs to look good. Add images, 
+*      labels,  and buttons that allow the user to interact with the menu.
+*         
+*         1) the Play game btn should hide the main menu and build a road 
+*         on the screen. After the road is built, the players car will be 
+*         added and the oncoming trafic will be hidden from view
+*         
+*         2) the High Scores btn should take the user to the high scores
+*         screen where they can view their top scores. This screen needs to
+*         look good too because people are always checking their personal bests.
+*         Make them want to play more!
+*         
+*         3) the select car btn brings up the frame to the user that allows them
+*         to change their car. This car is then saved to a file and is brought
+*         back up when the game loads.
+*         
+*   6. Now that the menu is functional, lets build the game
+*         
+*         1) Add an array of labels that each of an imageIcon of a roadPiece
+*         This is so we can show the user a road that makes it look like the
+*         car is moving on the road, not the other way around.
+*         
+*         2) using the game timer, adjust the Y value of each roadpiece to make it 
+*         appear that the car is moving. To make this visually appealing and 
+*         realisitc, we need to add a row or two that the user does not see to the 
+*         bottom of the screen.
+*         
+*         3) As we adjust the road pieces based on the timer, we will notice that the 
+*         road moves down, but deos not reset. This is why we made another row. Set in
+*         the timer listener to check if the y value of the road piece is greater
+*         than that of the height of the frame, reset t a negative Y value so the 
+*         row appears above the top of the frame and rolls down the screen, like an
+*         endless conveyor belt.
+*         
+*         4) We have a moving road. Now, lets add our car to it. Set the Y value to be
+*         a constant so it deos not move up and down. We only want to move left and right
+*         to avoid traffic. In the timer listener class, we want to check to see if the 
+*         car is still in bounds. But wait, how do we make it move?
+*         
+*         5) add a mouse listener to check if the user clicks the frame. If the user 
+*         clicks to the right of the car, move the car right. if the user clicks to 
+*         the left. move it left. The timer listener will be checking to see if the 
+*         car has left the screen or not. We want the car to not be able to cheat the 
+*         game, so we set the X value to the greatest(or least) possible and change the 
+*         variable to the carMovement so they car easily enter the other direection
+*         again.
+*         
+*         6) Check to see if the user hits another car or not. This is also happening
+*         in the timer listener because we want to check everytime the game moves.
+*         As of right now, we cant see what the cars look like, so we need to add 
+*         some images.
+*         
+*         7) create methods that will enable each of the three cars to choose a random
+*         color. Them, after the car is selected, we want the car to be moved to a random
+*         lane so the game is different every time the user plays. Call this method every 
+*         time the oncoming car's Y vlaue is greater than the height of the frame.
+*         
+*         8) now that we can see the cars we hit, we need to show the user a gameOver screen 
+*         as well as stop all actitivy that is going on in the game. we want to stop the timer
+*         which stops all movement in the road, car, and oncoming traffic. Then, show the user
+*         a game over screen that will allow them to see their scores of return to the main menu
+*        
+*         9) at this point, we need to save the score from the game. We will do this by 
+*         calling a different class that allows us to save the player name and score to a file.
+*         We will append this file so the user can save all scores earned while playing.
+*        
+*   7. Now that the game is functional, now for the high scores menu
+*   
+*         1)Add an image to the screen that tells the user that they are in teh 
+*         High Scores Screen
+*         
+*         2) Add images for user appeal. This is the reason for the two cars on 
+*         the left and right
+*         
+*         3) Add a JTextArea that is not editable, but will load in the scores read from
+*         a file. This will be done using the readFileIntoHashMap class that will
+*         first import the name and score of the very first game and add each item to 
+*         our hashmap. This will keep going until all scores in the file are added.
+*         
+*         4) Now we need to sort the scores array. This is so we can get the scores
+*         array from least to greatest. Why is this helpful? this helps us sort
+*         the list from greatest to smallest using recursion in a later step.
+*         This is so we can see the descending list of scores, becasue we really
+*         only car about the top few.
+*         
+*         5) Now that the scores are sorted, we lost the corresponding name. To 
+*         match the scores back up with the person that earned it, we need to 
+*         create a search method that will search for the player name by the score
+*         they recieved.
+*         
+*         6) after the scores are matched up with their players, we need to add the
+*         information to a string that will be returned and sent to another class via
+*         another method. We now have a foramtted String with the matched up user names
+*         and scores.
+*         
+*         7) add the string to the text area.
+*         
+*         8) Change the font of the text area so the scores are easier to read
+*         
+*
+*   etc.
+*
+*   Classes needed and Purpose (Input, Processing, Output)
+*   main class - RaceGame.java
+*   CarSelect.java
+*   SaveScore.java
+*   readFileIntoArrayList.java
+*   MyGameScores.java
+*  
+*
 */
 
 
@@ -245,6 +251,9 @@ public class RaceGame extends JFrame
    
    }
    
+   /**
+    * Hides main game screen
+    */
    public void hideGame()
    {
       //Method hides any game pieces so a different menu can be shown
@@ -263,6 +272,9 @@ public class RaceGame extends JFrame
       }
    }
    
+   /**
+    * Shows main Game screen
+    */
    public void showGame()
    {
    //Method shows all game pieces so the game can be played
@@ -291,6 +303,9 @@ public class RaceGame extends JFrame
    
    }
    
+   /**
+    * Hides Main Menu
+    */
    public void hideMenu()
    {
    //Method hides any menu item so a different menu can be shown
@@ -304,6 +319,9 @@ public class RaceGame extends JFrame
       scoresField.setVisible(false);
    }
    
+   /**
+    * Show main Menu
+    */
    public void showMenu()
    {
    //Method shows all menu items so the main menu can be shown
@@ -319,7 +337,9 @@ public class RaceGame extends JFrame
       nameInput.setVisible(true);
       scoresField.setVisible(false);
    }
-   
+   /**
+    * Shows generated High Score Screen
+    */
    public void showScores()
    {
    //Method hshows all items in the highScore menu
@@ -330,6 +350,10 @@ public class RaceGame extends JFrame
       scoresField.setVisible(true);
       menuBtn2.setVisible(true);
    }
+   
+   /**
+    * Hide High Score Screen
+    */
    public void hideScores()
    {
    //Method hides any high score menu item so a different menu can be shown
@@ -340,6 +364,9 @@ public class RaceGame extends JFrame
       menuBtn2.setVisible(false);
    }
 
+   /**
+    * Initializes All components to the Main Frame
+    */
    public void initComp()
    {
    //adds compenents to frame
@@ -403,6 +430,9 @@ public class RaceGame extends JFrame
      
    }
    
+   /**
+    * Adds menu options to the JMenuBar
+    */
    public void addMenuOptions()
    {
    //Show menu options on the main menu
@@ -427,6 +457,11 @@ public class RaceGame extends JFrame
       menu.add(playGame);
    }
    
+   /**
+    * 
+    * @author Justin
+    *Opens class for user to select a different car
+    */
    private class SelectCar implements ActionListener
    {
       public void actionPerformed(ActionEvent e)
@@ -438,6 +473,9 @@ public class RaceGame extends JFrame
       }
    }
    
+   /**
+    * Adds the components for the score Screen
+    */
    public void addScoreItems()
    {
       //adds items to the high score menu
@@ -479,6 +517,10 @@ public class RaceGame extends JFrame
       scoreSheet.add(carTwo2);
       
    }
+   
+   /**
+    * Gathers the appropriate data to display the users and the scores of this game
+    */
    public void addTextToScores()
    {
    //adds the scores from the text file to the high score view
@@ -488,6 +530,11 @@ public class RaceGame extends JFrame
       
    }
    
+   /**
+    * Shows a high score view and manages listeners
+    * @author Justin
+    *
+    */
    private class HighScoreView implements ActionListener
    {
       public void actionPerformed(ActionEvent e)
@@ -516,7 +563,11 @@ public class RaceGame extends JFrame
          
       }
    }
-   
+   /**
+    * 
+    * @author Justin
+    *	Starts the main game after clicking the start button
+    */
    private class Game implements ActionListener
    {
    //Class that starts a new game from any where there is a play btn
@@ -562,6 +613,9 @@ public class RaceGame extends JFrame
       }
    }
    
+   /**
+    * Adds a car to the view at the bottom of the screen, in which the user can control
+    */
    public void addCar()
    {
    //adds user's car to the game
@@ -594,6 +648,9 @@ public class RaceGame extends JFrame
       car.setBounds(300, 450, 110, 226);
    }
    
+   /**
+    * Selects the traffic car that will be displayed in a traffic lane
+    */
    public void chooseLaneOne()
    {
          
@@ -642,6 +699,9 @@ public class RaceGame extends JFrame
          }
       }
    }
+   /**
+    * Chooses whre the second traffic car will be located
+    */
    public void chooseLaneTwo()
    {
       if(gameStart == true)
@@ -688,7 +748,9 @@ public class RaceGame extends JFrame
          }
       }
    }
-   
+   /**
+    * Chooses where the third car will be located
+    */
    public void chooseLaneThree()
    {
       if(gameStart == true)
@@ -736,6 +798,9 @@ public class RaceGame extends JFrame
       }
    }
 
+   /**
+    * Displays a screen informaing the user that the game is over (Happens after a collision)
+    */
    public void gameOverScreen()
    {
    //If the user hits an oncoming car
@@ -770,6 +835,9 @@ public class RaceGame extends JFrame
       mainScreen.add(highScoresBtn);
    }
    
+   /**
+    * Adds the road to the background
+    */
    public void addRoad()
    {
    //Add road to game
@@ -856,6 +924,12 @@ public class RaceGame extends JFrame
       
    
    }
+   
+   /**
+    * Gets the x location of where the user clicked the mouse on the screen so the car can move in that location
+    * @author Justin
+    *
+    */
    public class FindX implements MouseListener
    {
       //Adds a mouse listener so the user can click anywhere
@@ -884,7 +958,9 @@ public class RaceGame extends JFrame
       public void mouseMoved(MouseEvent e){}
    
    }
-   
+   /**
+    * Ends the current game
+    */
    public void endGame()
    {
       timer.stop();
@@ -916,6 +992,11 @@ public class RaceGame extends JFrame
       scoreLbl.setText("Final Score: " + df.format(gameScore));
    }
    
+   /**
+    * 
+    * @author Justin
+    *	Manages all moving components and items that should be updated every time something happens
+    */
    public class TimerListener implements ActionListener
    {
    //for every 30 ms, move the road, determine if the user hit another car, 
@@ -1110,11 +1191,19 @@ public class RaceGame extends JFrame
       }
    } 
    
+   /**
+    * New game will soon be in place. Reset the cars here
+    */
    public void resetCars()
    {
       gameStart = false;
    }
 
+   /**
+    * 
+    * @author Justin
+    *	Create a listener for the main menu
+    */
    private class MenuListener implements ActionListener
    {
    //Class to check to see what item from the menu the user clicked
