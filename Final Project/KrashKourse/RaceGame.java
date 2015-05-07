@@ -168,6 +168,8 @@ public class RaceGame extends JFrame
    JLabel carOne = new JLabel(new ImageIcon("CarOne.png"));
    JLabel carTwo = new JLabel(new ImageIcon("CarTwo.png"));
    
+   String[] carArray = {"BlueCar.png", "CopCar.png", "OrangeCar.png", "OncomingCar.png", "PinkCar.png"};
+   
    
    //For high Scores Screen
    private JLabel header = new JLabel(new ImageIcon("HighScoresHeader.png"));
@@ -606,28 +608,7 @@ public class RaceGame extends JFrame
          if(carOneReset == false){
          //for Car one
          //Choose what car is heading your way
-            switch(trafficOne)
-            {
-               case 1:
-                  choiceOne = "BlueCar.png";
-                  break;
-               case 2:
-                  choiceOne = "CopCar.png";
-                  break;
-               case 3:
-                  choiceOne = "OrangeCar.png";
-                  break;
-               case 4:
-                  choiceOne = "OncomingCar.png";
-                  break;
-               case 5:
-                  choiceOne = "PinkCar.png";
-                  break;
-               default:
-                  choiceOne = "OncomingCar.png";
-                  break;
-            
-            }
+          choiceOne = carArray[trafficOne];	//Chooses a random Car from the oncoming traffic array
             ImageIcon oncomingTrafficOne = new ImageIcon(choiceOne);
             oncomingOne.setIcon(oncomingTrafficOne);
          
@@ -672,33 +653,9 @@ public class RaceGame extends JFrame
             int trafficTwo = rand.nextInt(5) + 1;
             String choiceTwo = null;
             
-            switch(trafficTwo)
-            {
-            //choose what car is heading your way
-               case 1:
-                  choiceTwo = "BlueCar.png";
-                  break;
-               case 2:
-                  choiceTwo = "CopCar.png";
-                  break;
-               case 3:
-                  choiceTwo = "OrangeCar.png";
-                  break;
-               case 4:
-                  choiceTwo = "OncomingCar.png";
-                  break;
-               case 5:
-                  choiceTwo = "PinkCar.png";
-                  break;
-               default:
-                  choiceTwo = "OncomingCar.png";
-                  break;
-            
-            }
-         
-         
-            ImageIcon oncomingTrafficTwo = new ImageIcon(choiceTwo);
-            oncomingTwo.setIcon(oncomingTrafficTwo);
+           choiceTwo = carArray[trafficTwo];
+           ImageIcon oncomingTrafficTwo = new ImageIcon(choiceTwo);
+           oncomingTwo.setIcon(oncomingTrafficTwo);
          
          //for Car 2
             switch(secondLane)
@@ -743,28 +700,7 @@ public class RaceGame extends JFrame
             int trafficThree = rand.nextInt(5) + 1;
             String choiceThree = null;
             
-            switch(trafficThree)
-            {
-            //What car is coming
-               case 1:
-                  choiceThree = "BlueCar.png";
-                  break;
-               case 2:
-                  choiceThree = "CopCar.png";
-                  break;
-               case 3:
-                  choiceThree = "OrangeCar.png";
-                  break;
-               case 4:
-                  choiceThree = "OncomingCar.png";
-                  break;
-               case 5:
-                  choiceThree = "PinkCar.png";
-                  break;
-               default:
-                  choiceThree = "OncomingCar.png";
-                  break;
-            }
+            choiceThree = carArray[trafficThree];
             ImageIcon oncomingTrafficThree = new ImageIcon(choiceThree);
             oncomingThree.setIcon(oncomingTrafficThree);
          
