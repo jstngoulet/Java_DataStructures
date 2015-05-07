@@ -1,0 +1,182 @@
+package Homework_2;
+
+public class PrintJob implements Comparable<PrintJob>{
+	/**
+	 * This class will create different print job types.
+	 * The possible methods each have a different possible combination
+	 */
+	public String fileName, dateRecieved, printer, priority;
+	int pagesInFile, taskNumber; //Default task is 1 because 0 task means !exist
+	
+	//Create heiarchy of priorities
+	public enum Priorities{
+		High, Normal, Low
+	}
+	Priorities curP;
+
+	public PrintJob(int task, String file, int pages, String dateRecieved)
+	{
+		//Increment taskNumber
+		this.taskNumber = task;
+
+		this.fileName = file;
+		this.pagesInFile = pages;
+		this.dateRecieved = dateRecieved;
+
+		//Set defaults
+		this.printer ="CS_113_Printer_Class_1";
+		this.priority = "Low";
+		
+		//Set priority
+		curP = Priorities.Low;
+
+	}
+
+	public PrintJob(int task, String file, int pages, String dateRecieved, String printerName)
+	{
+		//Increment taskNumber
+		this.taskNumber = task;
+
+		this.fileName = file;
+		this.pagesInFile = pages;
+		this.dateRecieved = dateRecieved;
+
+		this.printer = printerName;
+		curP = Priorities.Low;
+	}
+
+	public PrintJob(int task, String file, int pages, String dateRecieved, String printerName, String priorityLevel)
+	{
+		//Increment taskNumber
+		this.taskNumber = task;
+
+		this.fileName = file;
+		this.pagesInFile = pages;
+		this.dateRecieved = dateRecieved;
+
+		this.printer = printerName;
+		this.priority = priorityLevel;
+		
+		if(this.priority.equalsIgnoreCase("High"))
+			curP = Priorities.High;
+		else if(this.priority.equalsIgnoreCase("Normal"))
+			curP = Priorities.Normal;
+		else
+			curP = Priorities.Low;
+	}
+
+	//Accessors and Mutators
+	public String getFileName()
+	{
+		if(this.fileName == null)
+			setFileName("Job_" + this.taskNumber);
+		return this.fileName;
+	}
+
+	public int getPages()
+	{
+		if(this.pagesInFile == 0)
+			setPages(1);
+		return this.pagesInFile;
+	}
+
+	public String getDateRecieved()
+	{
+		if(this.dateRecieved == null)
+			setDateRecieved("Today");
+		return this.dateRecieved;
+	}
+
+	public String getPrinterName()
+	{
+		if (this.printer == null)
+			setPrinter("CS_113_Printer_Class_1");
+		return this.printer;
+	}
+
+	public String getPriority()
+	{
+		if(this.priority == null)
+			setPriority("Low");
+		return this.priority;
+	}
+	
+	public Priorities priority()
+	{
+		if(this.priority == null)
+			setPriority("Low");
+		return this.curP;
+	}
+
+	public int getTaskNumber()
+	{
+		if(this.taskNumber == 0)
+			this.taskNumber = 1;
+		return this.taskNumber;
+	}
+
+	//Just Mutators remain
+	public void setPriority(String a)
+	{
+		if(a.equalsIgnoreCase("Low") || a.equalsIgnoreCase("Normal") || a.equalsIgnoreCase("High"))
+		{
+			this.priority = a;
+			if(a.equals("High"))
+				this.curP = Priorities.High;
+			else if(a.equals("Normal"))
+				this.curP = Priorities.Normal;
+			else
+				this.curP = Priorities.Low;
+		}
+		else
+		{
+			this.priority = "Low";  
+			this.curP = Priorities.Low;
+			//If no priority matches the defaults, it becomes a low priority
+		}
+	}
+
+	public void setPrinter(String a)
+	{
+		//I could create a class called printer with all of the dynamics, but this the purpose for the assignment
+		this.printer = a;
+	}
+
+	public void setDateRecieved(String a)
+	{
+		//could be a Date(), but we only need a string in this case because I will explicity call date in the main and use that as a string
+		this.dateRecieved = a;
+	}
+
+	public void setPages(int a)
+	{
+		this.pagesInFile = a;
+	}
+
+	public void setFileName(String a)
+	{
+		this.fileName = a;
+	}
+
+	/**
+	 * Sort by priority, then page count
+	 */
+	@Override
+	public int compareTo(PrintJob o) {
+		//Just sort through priority first, the page count comes once the list is already sorted
+		//A simple compare just compares the initial chars (in this case). We want to sort High, normal , low
+		return priority().compareTo(o.priority());
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.taskNumber + ")\t\t" + 
+				this.fileName + "\t\t" + 
+				this.pagesInFile + "\t\t" + 
+				getPriority() + "\t\t  " + 
+				this.printer + "\t" + 
+				this.getDateRecieved();
+	}
+
+}
