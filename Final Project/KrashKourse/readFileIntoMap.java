@@ -116,6 +116,11 @@ public class readFileIntoMap
 		//Sends data to class that calls it
 		return str;
 	}
+	
+	public HashMap<String, ArrayList<Integer>> getMap()
+	{
+		return data;
+	}
 
 	public String findNameByScore(HashMap<String, ArrayList<Integer>> names, int score)
 	{  

@@ -215,6 +215,7 @@ public class RaceGame extends JFrame
    private JTextArea scoresField = new JTextArea(15, 100);
    private String newName = "";
    private JButton menuBtn2 = new JButton(new ImageIcon("Menu2.png"));
+   private readFileIntoMap scoreInfo;
    
    //For game over screen
    private JLabel gameOver = new JLabel(new ImageIcon("GameOver.png"));
@@ -384,9 +385,14 @@ public class RaceGame extends JFrame
       mainMenu.addActionListener(new MenuListener());
       fileMenu.add(mainMenu);
       
+      JMenuItem scoreList = new JMenuItem("View Scores");	//Shows scores by player
+      scoreList.addActionListener(new MenuListener());
+      fileMenu.add(scoreList);
+      
       JMenuItem exit = new JMenuItem("Close Window");
       exit.addActionListener(new MenuListener());
       fileMenu.add(exit);
+      
       
       JMenuBar bar = new JMenuBar();
       bar.add(fileMenu);
@@ -524,7 +530,7 @@ public class RaceGame extends JFrame
    public void addTextToScores()
    {
    //adds the scores from the text file to the high score view
-      readFileIntoMap scoreInfo = new readFileIntoMap();
+      scoreInfo = new readFileIntoMap();
       String temp = scoreInfo.sendData();
       scoresField.setText(temp);
       
@@ -658,7 +664,7 @@ public class RaceGame extends JFrame
       {
          Random rand = new Random(); 
          lane = rand.nextInt(5) + 1;
-         int trafficOne = rand.nextInt(5) + 1;
+         int trafficOne = rand.nextInt(5);
          String choiceOne = null;
       
       
@@ -710,7 +716,7 @@ public class RaceGame extends JFrame
          //For car 2
             Random rand = new Random();
             secondLane = rand.nextInt(5) + 1;
-            int trafficTwo = rand.nextInt(5) + 1;
+            int trafficTwo = rand.nextInt(5);
             String choiceTwo = null;
             
            choiceTwo = carArray[trafficTwo];
@@ -759,7 +765,7 @@ public class RaceGame extends JFrame
          //For car 3
             Random rand = new Random();
             thirdLane = rand.nextInt(5) + 1;
-            int trafficThree = rand.nextInt(5) + 1;
+            int trafficThree = rand.nextInt(5);
             String choiceThree = null;
             
             choiceThree = carArray[trafficThree];
@@ -1225,6 +1231,12 @@ public class RaceGame extends JFrame
             HighScoreView testing = new HighScoreView();
             testing.actionPerformed(e);           
          }
+         else if(option.equalsIgnoreCase("View Scores"))
+        	{
+        	 	ShowScoreList myScores = new ShowScoreList(scoreInfo.getMap());
+        	 	myScores.toFront();
+        	}
+         
          else if(option.equals("Close Window"))
          {
             System.exit(0);
