@@ -88,7 +88,10 @@ public class MatrixGraph<E, K> {
 	printArray(matrixGraph);
 
 }
-	
+	/**
+	 * Prints double array as a graph
+	 * @param matrixGraph
+	 */
 	public static void printArray(String matrixGraph[][])
 	{
 		//Print new double array
@@ -204,7 +207,7 @@ public static void main(String[] args)
 		nodes.add(newNode);
 
 		//1
-		newNode = new MatrixNode<Integer, Integer>(1, new LinkedList<Integer>(Arrays.asList(0, 2)));
+		newNode = new MatrixNode<Integer, Integer>(1, new LinkedList<Integer>(Arrays.asList(0, 2, 3)));
 		nodes.add(newNode);
 
 		//2
