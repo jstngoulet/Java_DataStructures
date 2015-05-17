@@ -14,8 +14,7 @@ import java.util.LinkedList;
 
 public class MatrixGraph<E, K> {
 
-	HashMap<String, Integer>  graphX;
-	HashMap<E, String>  graphY;
+	public static HashMap<String, Integer>  graphX;
 
 	public MatrixGraph(LinkedList<MatrixNode<E, K>> nodes) {
 
@@ -58,55 +57,109 @@ public class MatrixGraph<E, K> {
 			iterator++;
 		}
 		
-		for(MatrixNode<E, K> item : nodes)
-		{
-			System.out.println(item.data.toString() + " \t" + item.nodesList.toString());
-			for(int i = 1; i <= item.nodesList.size(); i++)
+		
+		//For each node, we need to check to see if they were added to our array. If they were, we need to get the index of it and place a 1 in the proper location
+			for(int i = 0; i < graphX.size() + 0; i++)
 			{
-				//System.out.println("Scanning: " + item.nodesList.get(i-1) + " vs. " + matrixGraph[0][i]);
-				
-				for(int a = 1; a < graphX.size()  + 1; a++)
+				for(K node : nodes.get(i).nodesList)
 				{
-					//System.out.println("Scanning: " + item.nodesList.get(i-1) + " vs. " + matrixGraph[0][a].trim());
-					if((item.nodesList.get(i-1).toString().equals(matrixGraph[0][a])))
+					if(indexOf(node, matrixGraph) != -1)
 					{
-						System.out.println("Match: " + (item.nodesList.get(i-1)) + "\tMyInt: " + a);
-						matrixGraph[i][a] = "1";
-					}
-					else
-					{
-						//matrixGraph[i][a] = "-";
+						//System.out.println(node.toString() + "  found!");
+						matrixGraph[i+1][indexOf(node, matrixGraph)] = "1";
 					}
 				}
 			}
-		}
 		
-
-
-	//Print new double array
-	String typed = "\n";
-
-	for(int i = 0; i < graphX.keySet().size() + 1; i++)
-	{
-		for(int a = 0; a <graphX.keySet().size() + 1; a++)
-		{
-			try
+			
+			//Fill in null values
+			for(int i = 0; i < graphX.size() + 1; i++)
 			{
-				typed += matrixGraph[i][a] + "\t";
+				for (int d = 0; d < graphX.size() + 1; d++)
+				{
+					if((matrixGraph[i][d] == null))
+					{
+						matrixGraph[i][d] = "-";
+					}
+				}
 			}
-			catch(ArrayIndexOutOfBoundsException e)
-			{
 
-			}
-		}
-		typed += "\n";
-	}
 
-	System.out.println(typed);
+	printArray(matrixGraph);
 
 }
+	
+	public static void printArray(String matrixGraph[][])
+	{
+		//Print new double array
+		String typed = "\n";
 
+		/**
+		 * Prints array
+		 */
+		for(int i = 0; i < graphX.keySet().size() + 1; i++)	//i = row, a = column
+		{
+			for(int a = 0; a <graphX.keySet().size() + 1; a++)
+			{
+				if(a == 1 && i != 0)
+				{
+					typed+= "|\t";
+				}
+				else if(i == 0 && a == 1)
+				{
+					typed+= "\t";
+				}
+				else if(a == 0 && i == 1)
+				{
+					typed += "\t";
+					for(int d = 0; d < graphX.size(); d++)
+					{
+						typed += "---------";
+					}
+					typed += "\n";
+				}
+				try
+				{
+					typed += matrixGraph[i][a] + "\t";
+				}
+				catch(ArrayIndexOutOfBoundsException e)
+				{
 
+				}
+			}
+			typed += "\n";
+		}
+
+		System.out.println(typed);
+	}
+	/**
+	 * 
+	 * @param data	- 	Item to search for
+	 * @param array	-	Array to search in
+	 * @return	 			-	index of item in array (-1 if dNE)
+	 * 
+	 */
+	public int indexOf(K data, String array[][])
+	{
+		int column = 0;
+		
+		for(String[] row : array)
+		{
+			if(row[0].equals(data.toString()))
+			{
+				//System.out.println("Item: " + data + " \t\tFound @ index: " + column );
+				return column;
+			}
+			column++;
+		}
+		return -1;
+	}
+
+/**
+ * 
+ * @param args
+ * Runs program with 2 test cases (See complete graphs)
+ */
 
 public static void main(String[] args)
 {
@@ -135,8 +188,49 @@ public static void main(String[] args)
 	nodes.add(newNode);
 
 
-	//displayNodes(nodes);
+	//displayNodes(nodes);'
+	System.out.println("\tPage 572 Self-Check 1A");
 	new MatrixGraph<Integer, Integer>(nodes);	//The Data are ints and the nodes are ints
+	
+	while(!nodes.isEmpty())
+	{
+		nodes.removeLast();
+	}
+	
+	//Make another graph
+	//Add some test nodes
+		//0
+		newNode = new MatrixNode<Integer, Integer>(0, new LinkedList<Integer>(Arrays.asList(1, 4)));
+		nodes.add(newNode);
+
+		//1
+		newNode = new MatrixNode<Integer, Integer>(1, new LinkedList<Integer>(Arrays.asList(0, 2)));
+		nodes.add(newNode);
+
+		//2
+		newNode = new MatrixNode<Integer, Integer>(2, new LinkedList<Integer>(Arrays.asList(1, 6)));
+		nodes.add(newNode);
+
+		//3
+		newNode = new MatrixNode<Integer, Integer>(3, new LinkedList<Integer>(Arrays.asList(1, 5)));
+		nodes.add(newNode);
+
+		//4
+		newNode = new MatrixNode<Integer, Integer>(4, new LinkedList<Integer>(Arrays.asList(0)));
+		nodes.add(newNode);
+		
+		//5
+		newNode = new MatrixNode<Integer, Integer>(5, new LinkedList<Integer>(Arrays.asList(3)));
+		nodes.add(newNode);
+		
+		//6
+		newNode = new MatrixNode<Integer, Integer>(6, new LinkedList<Integer>(Arrays.asList(2)));
+		nodes.add(newNode);
+
+
+		//displayNodes(nodes);
+		System.out.println("\n\n\tPage 559 Self-Check 1B");
+		new MatrixGraph<Integer, Integer>(nodes);
 }
 
 public static void displayNodes(LinkedList<MatrixNode<Integer, Integer>> list)
