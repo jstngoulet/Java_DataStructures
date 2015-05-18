@@ -56,38 +56,38 @@ public class MatrixGraph<E, K> {
 			matrixGraph[0][iterator] = item.data.toString();
 			iterator++;
 		}
-		
-		
+
+
 		//For each node, we need to check to see if they were added to our array. If they were, we need to get the index of it and place a 1 in the proper location
-			for(int i = 0; i < graphX.size() + 0; i++)
+		for(int i = 0; i < graphX.size() + 0; i++)
+		{
+			for(K node : nodes.get(i).nodesList)
 			{
-				for(K node : nodes.get(i).nodesList)
+				if(indexOf(node, matrixGraph) != -1)
 				{
-					if(indexOf(node, matrixGraph) != -1)
-					{
-						//System.out.println(node.toString() + "  found!");
-						matrixGraph[i+1][indexOf(node, matrixGraph)] = "1";
-					}
+					//System.out.println(node.toString() + "  found!");
+					matrixGraph[i+1][indexOf(node, matrixGraph)] = "1";
 				}
 			}
-		
-			
-			//Fill in null values
-			for(int i = 0; i < graphX.size() + 1; i++)
+		}
+
+
+		//Fill in null values
+		for(int i = 0; i < graphX.size() + 1; i++)
+		{
+			for (int d = 0; d < graphX.size() + 1; d++)
 			{
-				for (int d = 0; d < graphX.size() + 1; d++)
+				if((matrixGraph[i][d] == null))
 				{
-					if((matrixGraph[i][d] == null))
-					{
-						matrixGraph[i][d] = "-";
-					}
+					matrixGraph[i][d] = "-";
 				}
 			}
+		}
 
 
-	printArray(matrixGraph);
+		printArray(matrixGraph);
 
-}
+	}
 	/**
 	 * Prints double array as a graph
 	 * @param matrixGraph
@@ -145,7 +145,7 @@ public class MatrixGraph<E, K> {
 	public int indexOf(K data, String array[][])
 	{
 		int column = 0;
-		
+
 		for(String[] row : array)
 		{
 			if(row[0].equals(data.toString()))
@@ -158,50 +158,50 @@ public class MatrixGraph<E, K> {
 		return -1;
 	}
 
-/**
- * 
- * @param args
- * Runs program with 2 test cases (See complete graphs)
- */
+	/**
+	 * 
+	 * @param args
+	 * Runs program with 2 test cases (See complete graphs)
+	 */
 
-public static void main(String[] args)
-{
-	//List that will hold all in the graph
-	LinkedList<MatrixNode<Integer, Integer>> nodes = new LinkedList<MatrixNode<Integer, Integer>>();
-
-	//Add some test nodes
-	//0
-	MatrixNode<Integer, Integer> newNode = new MatrixNode<Integer, Integer>(0, new LinkedList<Integer>(Arrays.asList(1, 4)));
-	nodes.add(newNode);
-
-	//1
-	newNode = new MatrixNode<Integer, Integer>(1, new LinkedList<Integer>(Arrays.asList(0, 4, 3, 2)));
-	nodes.add(newNode);
-
-	//2
-	newNode = new MatrixNode<Integer, Integer>(2, new LinkedList<Integer>(Arrays.asList(1, 3)));
-	nodes.add(newNode);
-
-	//3
-	newNode = new MatrixNode<Integer, Integer>(3, new LinkedList<Integer>(Arrays.asList(1, 2, 4)));
-	nodes.add(newNode);
-
-	//4
-	newNode = new MatrixNode<Integer, Integer>(4, new LinkedList<Integer>(Arrays.asList(0, 1, 3)));
-	nodes.add(newNode);
-
-
-	//displayNodes(nodes);'
-	System.out.println("\tPage 572 Self-Check 1A");
-	new MatrixGraph<Integer, Integer>(nodes);	//The Data are ints and the nodes are ints
-	
-	while(!nodes.isEmpty())
+	public static void main(String[] args)
 	{
-		nodes.removeLast();
-	}
-	
-	//Make another graph
-	//Add some test nodes
+		//List that will hold all in the graph
+		LinkedList<MatrixNode<Integer, Integer>> nodes = new LinkedList<MatrixNode<Integer, Integer>>();
+
+		//Add some test nodes
+		//0
+		MatrixNode<Integer, Integer> newNode = new MatrixNode<Integer, Integer>(0, new LinkedList<Integer>(Arrays.asList(1, 4)));
+		nodes.add(newNode);
+
+		//1
+		newNode = new MatrixNode<Integer, Integer>(1, new LinkedList<Integer>(Arrays.asList(0, 4, 3, 2)));
+		nodes.add(newNode);
+
+		//2
+		newNode = new MatrixNode<Integer, Integer>(2, new LinkedList<Integer>(Arrays.asList(1, 3)));
+		nodes.add(newNode);
+
+		//3
+		newNode = new MatrixNode<Integer, Integer>(3, new LinkedList<Integer>(Arrays.asList(1, 2, 4)));
+		nodes.add(newNode);
+
+		//4
+		newNode = new MatrixNode<Integer, Integer>(4, new LinkedList<Integer>(Arrays.asList(0, 1, 3)));
+		nodes.add(newNode);
+
+
+		//displayNodes(nodes);'
+		System.out.println("\tPage 572 Self-Check 1A");
+		new MatrixGraph<Integer, Integer>(nodes);	//The Data are ints and the nodes are ints
+
+		while(!nodes.isEmpty())
+		{
+			nodes.removeLast();
+		}
+
+		//Make another graph
+		//Add some test nodes
 		//0
 		newNode = new MatrixNode<Integer, Integer>(0, new LinkedList<Integer>(Arrays.asList(1, 4)));
 		nodes.add(newNode);
@@ -221,11 +221,11 @@ public static void main(String[] args)
 		//4
 		newNode = new MatrixNode<Integer, Integer>(4, new LinkedList<Integer>(Arrays.asList(0)));
 		nodes.add(newNode);
-		
+
 		//5
 		newNode = new MatrixNode<Integer, Integer>(5, new LinkedList<Integer>(Arrays.asList(3)));
 		nodes.add(newNode);
-		
+
 		//6
 		newNode = new MatrixNode<Integer, Integer>(6, new LinkedList<Integer>(Arrays.asList(2)));
 		nodes.add(newNode);
@@ -234,9 +234,9 @@ public static void main(String[] args)
 		//displayNodes(nodes);
 		System.out.println("\n\n\tPage 559 Self-Check 1B");
 		new MatrixGraph<Integer, Integer>(nodes);
-		
-		
-		
+
+
+
 		//Add a graph with Chars (to make sure its not just ints
 		LinkedList<MatrixNode<String, String>> nodesString = new LinkedList<MatrixNode<String, String>>();
 
@@ -244,30 +244,30 @@ public static void main(String[] args)
 		//Justin
 		MatrixNode<String, String> newNodeString = new MatrixNode<String, String>("Justin", new LinkedList<String>(Arrays.asList("Jaymes", "Daniel")));
 		nodesString.add(newNodeString);
-		
-		//Jaymes
-				newNodeString = new MatrixNode<String, String>("Jaymes", new LinkedList<String>(Arrays.asList("Justin", "Jason")));
-				nodesString.add(newNodeString);
-				
-		//Daniel
-				newNodeString = new MatrixNode<String, String>("Daniel", new LinkedList<String>(Arrays.asList("Justin")));
-				nodesString.add(newNodeString);
-				
-		//Jason
-				newNodeString = new MatrixNode<String, String>("Jason", new LinkedList<String>(Arrays.asList("Jaymes")));
-				nodesString.add(newNodeString);
-				
-				System.out.println("\n\n\tSitting Arrangements");
-				new MatrixGraph<String, String>(nodesString);
-		
-}
 
-public static void displayNodes(LinkedList<MatrixNode<Integer, Integer>> list)
-{
-	for(MatrixNode<Integer, Integer> a : list)
-	{
-		System.out.println(a.toString());
+		//Jaymes
+		newNodeString = new MatrixNode<String, String>("Jaymes", new LinkedList<String>(Arrays.asList("Justin", "Jason")));
+		nodesString.add(newNodeString);
+
+		//Daniel
+		newNodeString = new MatrixNode<String, String>("Daniel", new LinkedList<String>(Arrays.asList("Justin")));
+		nodesString.add(newNodeString);
+
+		//Jason
+		newNodeString = new MatrixNode<String, String>("Jason", new LinkedList<String>(Arrays.asList("Jaymes")));
+		nodesString.add(newNodeString);
+
+		System.out.println("\n\n\tSitting Arrangements");
+		new MatrixGraph<String, String>(nodesString);
+
 	}
-}
+
+	public static void displayNodes(LinkedList<MatrixNode<Integer, Integer>> list)
+	{
+		for(MatrixNode<Integer, Integer> a : list)
+		{
+			System.out.println(a.toString());
+		}
+	}
 
 }
