@@ -234,6 +234,32 @@ public static void main(String[] args)
 		//displayNodes(nodes);
 		System.out.println("\n\n\tPage 559 Self-Check 1B");
 		new MatrixGraph<Integer, Integer>(nodes);
+		
+		
+		
+		//Add a graph with Chars (to make sure its not just ints
+		LinkedList<MatrixNode<String, String>> nodesString = new LinkedList<MatrixNode<String, String>>();
+
+		//Add some test nodes
+		//Justin
+		MatrixNode<String, String> newNodeString = new MatrixNode<String, String>("Justin", new LinkedList<String>(Arrays.asList("Jaymes", "Daniel")));
+		nodesString.add(newNodeString);
+		
+		//Jaymes
+				newNodeString = new MatrixNode<String, String>("Jaymes", new LinkedList<String>(Arrays.asList("Justin", "Jason")));
+				nodesString.add(newNodeString);
+				
+		//Daniel
+				newNodeString = new MatrixNode<String, String>("Daniel", new LinkedList<String>(Arrays.asList("Justin")));
+				nodesString.add(newNodeString);
+				
+		//Jason
+				newNodeString = new MatrixNode<String, String>("Jason", new LinkedList<String>(Arrays.asList("Jaymes")));
+				nodesString.add(newNodeString);
+				
+				System.out.println("\n\n\tSitting Arrangements");
+				new MatrixGraph<String, String>(nodesString);
+		
 }
 
 public static void displayNodes(LinkedList<MatrixNode<Integer, Integer>> list)
